@@ -1,0 +1,30 @@
+<div class="content filter_content" role="main">
+    <div class="filter_content_wrapper">
+        <div class="filter_content_col">
+            <label for="nameFilter">Nom</label>
+            <input class="form-control"
+                   id="nameFilter"
+                   type="text"
+                   [ngModel]="nameFilterText"
+                   (ngModelChange)="onInputChangeTitre($event)"
+                   placeholder="Filtrer" />
+        </div>
+        <div class="filter_content_col">
+            <label for="priceFilter">Prix</label>
+            <input class="form-control"
+                   id="priceFilter"
+                   type="number"
+                   [ngModel]="priceFilterText"
+                   (ngModelChange)="onInputChangePrice($event)"
+                   placeholder="Filtrer" />
+        </div>
+    </div>
+</div>
+<div class="filter_root">
+    <div class="filter_products_wrapper">
+        <app-list-product style="width: 100%"></app-list-product>
+    </div>
+    <div>
+      <app-panier/>
+    </div>
+</div>

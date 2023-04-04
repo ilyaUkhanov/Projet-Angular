@@ -1,0 +1,9 @@
+<div>
+  <h2>Détails</h2>
+  <div> <span>Titre: </span> <span>{{ product?.title ?? "" }}</span> </div>
+  <div> <span>Prix: </span>  <span>{{ product?.price ?? 0 }} €</span> </div>
+
+  <div *ngIf="product">
+    <button class="btn btn-primary" (click)="submitAddPanierProduct(product)"> Ajouter au panier </button>
+  </div>
+</div>

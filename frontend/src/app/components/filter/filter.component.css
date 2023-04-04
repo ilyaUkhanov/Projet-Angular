@@ -1,0 +1,24 @@
+.filter_content {
+  margin-left: 5%;
+  margin-top: 3%;
+}
+
+.filter_content_wrapper {
+  display: flex;
+}
+
+.filter_content_col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+}
+
+.filter_root {
+  display: flex;
+}
+
+.filter_products_wrapper {
+  margin: auto;
+  width: 50%;
+}

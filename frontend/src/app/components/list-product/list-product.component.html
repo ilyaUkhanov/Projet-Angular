@@ -1,0 +1,28 @@
+<div style="width: 100%; margin: 5%;margin-top: 0;">
+  <form class="form_root" [formGroup]="ProductFormIdentification" (ngSubmit)="submitAddProduct()" >
+    <div class="form_content" style="display: flex">
+      <div class="col-md-5">
+        <label for="label">Label</label>
+        <input type="text" formControlName="label" class="form-control" id="label" placeholder="Label"/>
+      </div>
+      <div class="col-md-5">
+        <label for="price">Prix €</label>
+        <input type="number" formControlName="price" class="form-control" id="price" placeholder="100">
+      </div>
+      <button type="submit" style="margin-left: 15px;" class="btn btn-success">+</button>
+    </div>
+  </form>
+
+  <ul class="listProduct_list listProduct_root">
+    <article *ngFor="let product of filteredProducts"  class="p-3" style="border: 1px solid #bebebe; width: 100%">
+      <section>
+        <h4>{{product.title}} - {{product.price}}€</h4>
+        <div>
+          <span class="btn btn-primary me-2" (click)="submitAddPanierProduct(product)"> Ajouter au panier </span>
+          <a class="btn btn-primary me-2" [routerLink] = "['details',product.id]" > Détails </a>
+          <span class="btn btn-danger"(click)="submitRemoveProduct(product)"> x </span>
+        </div>
+      </section>
+    </article>
+  </ul>
+</div>

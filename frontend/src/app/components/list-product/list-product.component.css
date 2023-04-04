@@ -1,0 +1,27 @@
+.listProduct_root {
+  margin-top: 3%;
+  width: 100%;
+}
+
+.listProduct_list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.listProduct_list li {
+  padding: 0.5rem;
+  list-style: none;
+  border-bottom: 1px solid #bebebe;
+  width: 90%;
+}
+
+.listProduct_toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+}

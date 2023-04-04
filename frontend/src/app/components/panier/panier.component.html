@@ -1,0 +1,14 @@
+<div style="margin: 5%;margin-top: 0;">
+  <h2> Mon Panier</h2>
+  <ul class="listProduct_list listProduct_root">
+    <li class="" *ngFor="let product of products">
+      <div>
+        <span>{{product.title}}</span>
+        <br>
+        <span>{{product.price}}€</span>
+        <br>
+        <span (click)="submitRemoveProduct(product)"> X </span>
+      </div>
+    </li>
+  </ul>
+</div>
