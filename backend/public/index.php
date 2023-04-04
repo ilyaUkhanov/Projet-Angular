@@ -44,7 +44,6 @@ const PRODUCTS = [
     ]
 ];
 
-const CORS_ORIGIN = "http://localhost:4200";
 const JWT_SECRET = "tempkey_test";
 
 const USERS = [
