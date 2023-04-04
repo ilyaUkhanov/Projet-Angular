@@ -5,8 +5,9 @@
 
   <nav>
     <a class="btn btn-primary me-3" [routerLink] = "['connection']" > Connection </a>
-    <a class="btn btn-primary me-3" [routerLink] = "['product']" > Catalogue </a>
-    <a class="btn btn-primary" [routerLink] = "['panier']" > Panier </a>
+
+    <a *ngIf="connected" class="btn btn-primary me-3" [routerLink] = "['product']" > Catalogue </a>
+    <a *ngIf="connected" class="btn btn-primary" [routerLink] = "['panier']" > Panier </a>
   </nav>
 
   <div> Articles dans le Panier: {{ numberPanierProducts }} </div>

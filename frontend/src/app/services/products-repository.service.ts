@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {IProductFromServer} from "../types/products";
 import {Observable} from "rxjs";
 
@@ -9,10 +9,12 @@ import {Observable} from "rxjs";
 export class ProductsRepositoryService {
   constructor(private http: HttpClient) { }
 
-  async getData(): Promise<Observable<IProductFromServer[]>> {
+  async getData(jwtHeader: string): Promise<Observable<IProductFromServer[]>> {
     try {
       // @ts-ignore
-      return this.http.get('http://localhost:8000/products');
+      return this.http.get('http://localhost:8000/products',
+        { headers: new HttpHeaders().set("Authorization", jwtHeader)  }
+      );
     } catch (error) {
       return Promise.reject();
     }

@@ -1,6 +1,31 @@
 <div style="margin: 5%;margin-top: 0;">
   <h2> Connection </h2>
   <div class="form_wrapper">
-    <app-form></app-form>
+    <form class="form_root" [formGroup]="FormIdentification" (ngSubmit)="submit()" >
+      <div class="form_content" style="display: flex">
+<!--        <div class="form_gender">-->
+<!--          <label for="Civilité">Civilité</label>-->
+<!--          <select formControlName="gender" class="" id="Civilité" style="margin: auto">-->
+<!--            <option>&#45;&#45;</option>-->
+<!--            <option>M.</option>-->
+<!--            <option>Mme.</option>-->
+<!--          </select>-->
+<!--        </div>-->
+        <div class="col-md-5">
+          <label for="login">login</label>
+          <input type="text" formControlName="login" class="form-control" id="login" placeholder="login"/>
+        </div>
+        <div class="col-md-5">
+          <label for="password">mot de passe</label>
+          <input type="text" formControlName="password" class="form-control" id="password" placeholder="mot de passe">
+        </div>
+      </div>
+      <button type="submit" style="margin-left: 15px;" class="btn btn-primary">Valider</button>
+
+      <div *ngIf="data">
+        <div><p>{{ this?.data | json }}</p></div>
+      </div>
+    </form>
+
   </div>
 </div>

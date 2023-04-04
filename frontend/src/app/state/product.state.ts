@@ -23,6 +23,7 @@ export class ProductState {
   // PRODUITS
   @Action(AddProductAction)
   addProduct(context: StateContext<IProductState>, action: IAddProductAction) {
+    console.log("ADD PRODUCT");
     const state = context.getState();
     context.setState({
       ...state,
@@ -35,6 +36,7 @@ export class ProductState {
 
   @Action(RemoveProductAction)
   removeProduct(context: StateContext<IProductState>, action: IRemoveProductAction) {
+    console.log("REMOVE PRODUCT");
     const state = context.getState();
     context.setState({
       ...state,
@@ -47,6 +49,7 @@ export class ProductState {
   // PANIER
   @Action(AddProductPanierAction)
   addProductPanierAction(context: StateContext<IProductState>, action: IAddProductPanierAction) {
+    console.log("addProductPanierAction");
     const state = context.getState();
     context.setState({
       ...state,
@@ -59,6 +62,7 @@ export class ProductState {
 
   @Action(RemoveProductPanierAction)
   removeProductPanierAction(context: StateContext<IProductState>, action: IRemoveProductPanierAction) {
+    console.log("RemoveProductPanierAction");
     const state = context.getState();
     context.setState({
       ...state,

@@ -10,14 +10,16 @@ import {Observable, withLatestFrom} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {RemoveProductAction} from "../../actions/removeProduct.actions";
 import {AddProductPanierAction} from "../../actions/addProductPanier.actions";
+import {IUserState, UserState} from "../../state/user.state";
 
 @Component({
   selector: 'app-list-product',
   templateUrl: './list-product.component.html',
   styleUrls: ['./list-product.component.css']
 })
-export class ListProductComponent implements OnInit {
+export class ListProductComponent {
   @Select(ProductState) productState!: Observable<IProductState>;
+  @Select(UserState) userState!: Observable<IUserState>;
   filteredProducts: IProduct[] = [];
 
   nextID: number = 0;
@@ -28,31 +30,33 @@ export class ListProductComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private httpService: ProductsRepositoryService,
               private filterService: FilterService,
-              private store: Store) {}
-
-  ngOnInit() {
+              private store: Store) {
     this.ProductFormIdentification = this.formBuilder.group({
       label: ['',Validators.required],
       price: ['',Validators.required]
     });
 
     this.isLoadingProducts = true;
-    this.httpService.getData().then((productsFromServer: Observable<IProductFromServer[]>) => {
-      productsFromServer
-        .pipe()
-        .subscribe((products) => {
-          const convertedProducts = products.map(prod => CONVERTER_PRODUCTS.serverToApp(prod));
-          convertedProducts.map((product) => {
-            this.store.dispatch(new AddProductAction(product));
-          })
 
-          this.filteredProducts = this.getFilteredProducts(convertedProducts);
-        });
+    this.userState.subscribe((user) => {
+      if (user && user.isConnected) {
+        this.httpService.getData(user.jwt).then((productsFromServer: Observable<IProductFromServer[]>) => {
+          productsFromServer
+            .pipe()
+            .subscribe((products) => {
+              const convertedProducts = products.map(prod => CONVERTER_PRODUCTS.serverToApp(prod));
+              convertedProducts.map((product) => {
+                this.store.dispatch(new AddProductAction(product));
+              })
 
-    }).then(()=>{
-      this.isLoadingProducts = false;
+              this.filteredProducts = this.getFilteredProducts(convertedProducts);
+            });
+
+        }).then(()=>{
+          this.isLoadingProducts = false;
+        })
+      }
     })
-
 
     this.productState.subscribe((productState) => {
       // Trouver nextID
@@ -68,7 +72,6 @@ export class ListProductComponent implements OnInit {
       this.filteredProducts = this.getFilteredProducts(productState.products);
     });
   }
-
   submitAddProduct() {
     const product = {
       id: this.nextID,

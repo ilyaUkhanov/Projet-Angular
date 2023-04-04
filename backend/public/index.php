@@ -1,4 +1,6 @@
 <?php
+
+use Firebase\JWT\Key;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -45,79 +47,103 @@ const PRODUCTS = [
 const CORS_ORIGIN = "http://localhost:4200";
 const JWT_SECRET = "tempkey_test";
 
-$app = AppFactory::create();
-//$app->setBasePath(SERVER_URI);
+const USERS = [
+    "ilyau" => [
+        "login" => "ilyau",
+        "firstname" => "Ilya",
+        "lastname" => "Ukhanov",
+        "password" => "1234",
+    ],
+    "thomasp" => [
+        "login" => "thomasp",
+        "firstname" => "Thomas",
+        "lastname" => "Personnenni",
+        "password" => "1234",
+    ]
+];
 
-$app->get('/', "test");
-$app->get('/login', "login");
-$app->get('/products/[{id}]', "getProduct");
+$app = AppFactory::create();
+$app->addBodyParsingMiddleware();
+
+$app->post('/login', "login");
 $app->get('/products', "getAllProducts");
-$app->post('/products', "addProduct");
-$app->patch('/products/[{id}]', "updateProduct");
-$app->delete('/products/[{id}]', "deleteProduct");
+$app->get('/products/[{id}]', "getProduct");
 
 function setupCORS($request) {
-    return $request->withHeader('Access-Control-Allow-Origin', CORS_ORIGIN)
-                    ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-                    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    return $request
+        ->withHeader("Content-Type", "application/json")
+        ->withHeader('Access-Control-Allow-Origin', '*')
+        ->withHeader('Access-Control-Allow-Headers', 'Content-Type,  Authorization')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+        ->withHeader('Access-Control-Expose-Headers', 'Authorization');
 }
 
-function test($request,$response,$args) {
-    $response->getBody()->write("Hello world!");
+$app->options('/login', function (Request $request, Response $response, $args) {
+    $response = $response->withHeader("Access-Control-Max-Age", 600);
     return setupCORS($response);
-}
+});
 
 function login($request,$response,$args) {
     $issuedAt = time();
     $expirationTime = $issuedAt + 600;
+
+    $body = json_decode($request->getBody());
+
+    if($body) {
+        $login = $body->login;
+        $password = $body->password;
+        $user = USERS[$login];
+    }
+
+    if (!$user ||$password !== $user["password"]) {
+        $response->getBody()->write("Utilisateur pas trouvé");
+        return setupCORS($response);
+    }
+
     $payload = array(
-        'userid' => "1",
-        'email' => "ukhanov.ilya.67@gmail.com",
-        'pseudo' => "ukhanov",
+        'userid' => 1,
+        'login' => $login,
+        'password' => $password,
         'iat' => $issuedAt,
         'exp' => $expirationTime
     );
 
     $token_jwt = JWT::encode($payload,JWT_SECRET, "HS256");
 
-    $response->getBody()->write("");
+    $response->getBody()->write(json_encode($user));
     return setupCORS($response)
             ->withHeader("Authorization", "Bearer {$token_jwt}");
 }
 
-function getProduct($request,$response,$args) {
-    // $id = $args['id'];
-
-    $product = [ 'name' => "TEST" ];
-    return $response->getBody()->write(json_encode($product));
-}
+$app->options('/products', function (Request $request, Response $response, $args) {
+    $response = $response->withHeader("Access-Control-Max-Age", 600);
+    return setupCORS($response);
+});
 
 function getAllProducts($request,$response,$args) {
-    $response->getBody()->write(json_encode(PRODUCTS));
+    $jwt = null;
+
+    if ($request->getHeaders()["Authorization"]) {
+        $jwtHeader = $request->getHeaders()["Authorization"][0];
+        $jwtHeader = explode("Bearer ", $jwtHeader)[1];
+
+        $jwt = JWT::decode($jwtHeader, new Key(JWT_SECRET, 'HS256'));
+    }
+
+    if ($jwt) {
+        $products = json_encode(PRODUCTS);
+        $response->getBody()->write($products);
+        return setupCORS($response);
+    }
+
+    $response->getBody()->write("Utilisateur pas trouvé");
     return setupCORS($response);
 }
 
-function addProduct($request,$response,$args) {
-    // $body = $request->getParsedBody();
-    // $nom = $body['nom'];
-
-    $response->getBody()->write("");
-    return setupCORS($response);
-}
-
-function updateProduct($request,$response,$args) {
-//    $id = $args['id'];
-//    $body = $request->getParsedBody();
-//    $nom = $body['nom'];
-
-    $response->getBody()->write("");
-    return setupCORS($response);
-}
-function deleteProduct($request,$response,$args) {
-//    $id = $args['id'];
-
-    $response->getBody()->write("");
-    return setupCORS($response);
+function getProduct($request,$response,$args) {
+    // $id = $args['id'];
+    $product = [ 'name' => "TEST" ];
+    return $response->getBody()->write(json_encode($product));
 }
 
 $app->run();

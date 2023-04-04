@@ -8,7 +8,6 @@ import { FilterComponent } from './components/filter/filter.component';
 import { HttpClientModule} from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormComponent } from './components/form/form.component';
 import {NgxsModule, Select} from "@ngxs/store";
 import {IProductState, ProductState} from "./state/product.state";
 import {environment} from "../environments/environment";
@@ -16,6 +15,7 @@ import {PanierComponent} from "./components/panier/panier.component";
 import {DetailComponent} from "./components/detail/detail.component";
 import {RouterModule, Routes} from "@angular/router";
 import {ConnectionComponent} from "./components/connection/connection.component";
+import {UserState} from "./state/user.state";
 
 const appRoutes: Routes = [
   {path: '', component: FilterComponent},
@@ -30,7 +30,6 @@ const appRoutes: Routes = [
     AppComponent,
     ListProductComponent,
     FilterComponent,
-    FormComponent,
     PanierComponent,
     DetailComponent,
     ConnectionComponent
@@ -41,7 +40,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([ProductState], { developmentMode: !environment.production }),
+    NgxsModule.forRoot([ProductState, UserState], { developmentMode: !environment.production }),
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],
