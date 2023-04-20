@@ -34,7 +34,7 @@ export class ConnectionComponent implements OnInit {
 
   async login(data: IUserLogin): Promise<Observable<HttpResponse<any>>> {
     try {
-      const observable = this.http.post<IUserState>('https://tp06-ukhanov-ilya.onrender.com', JSON.stringify(data), {observe: 'response'});
+      const observable = this.http.post<IUserState>('https://tp06-ukhanov-ilya.onrender.com/login', JSON.stringify(data), {observe: 'response'});
       // const observable = this.http.post<IUserState>('http://localhost:8080/login', JSON.stringify(data), {observe: 'response'});
 
       observable.subscribe((response) => {
