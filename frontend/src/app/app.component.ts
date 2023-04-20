@@ -20,7 +20,6 @@ export class AppComponent {
   public constructor() {
     this.userState.subscribe((user) => {
       this.connected = user?.isConnected ?? false;
-      console.log("connected", user?.isConnected ?? false);
     })
   }
 

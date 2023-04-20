@@ -40,6 +40,7 @@ export class ListProductComponent {
 
     this.userState.subscribe((user) => {
       if (user && user.isConnected) {
+
         this.httpService.getData(user.jwt).then((productsFromServer: Observable<IProductFromServer[]>) => {
           productsFromServer
             .pipe()
@@ -48,8 +49,7 @@ export class ListProductComponent {
               convertedProducts.map((product) => {
                 this.store.dispatch(new AddProductAction(product));
               })
-
-              this.filteredProducts = this.getFilteredProducts(convertedProducts);
+              this.filteredProducts = convertedProducts;
             });
 
         }).then(()=>{
@@ -68,8 +68,8 @@ export class ListProductComponent {
 
       this.nextID = biggestID + 1;
 
-      // Assigner les products
-      this.filteredProducts = this.getFilteredProducts(productState.products);
+      // Assigner les products filtrés
+      this.filteredProducts = productState.filteredProducts;
     });
   }
   submitAddProduct() {
@@ -90,16 +90,5 @@ export class ListProductComponent {
 
   addProduct(product: IProduct) {
     this.store.dispatch(new AddProductAction(product))
-  }
-
-  getFilteredProducts(products: IProduct[]) {
-    return products.filter(product =>
-      (product.price <= this.filterService.filterPrice || this.filterService.filterPrice === 0) &&
-      (product.title.toLowerCase().includes(this.filterService.filterName.toLowerCase()) || this.filterService.filterName === "")
-    )
-  }
-
-  filter() {
-
   }
 }

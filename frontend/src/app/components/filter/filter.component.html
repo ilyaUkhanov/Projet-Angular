@@ -5,17 +5,19 @@
             <input class="form-control"
                    id="nameFilter"
                    type="text"
+                   #inputPrice
+                   (keyup)="searchName($event)"
                    [ngModel]="nameFilterText"
-                   (ngModelChange)="onInputChangeTitre($event)"
                    placeholder="Filtrer" />
         </div>
         <div class="filter_content_col">
             <label for="priceFilter">Prix</label>
             <input class="form-control"
+                   #inputName
+                   (keyup)="searchPrice($event)"
                    id="priceFilter"
                    type="number"
                    [ngModel]="priceFilterText"
-                   (ngModelChange)="onInputChangePrice($event)"
                    placeholder="Filtrer" />
         </div>
     </div>
@@ -23,8 +25,5 @@
 <div class="filter_root">
     <div class="filter_products_wrapper">
         <app-list-product style="width: 100%"></app-list-product>
-    </div>
-    <div>
-      <app-panier/>
     </div>
 </div>

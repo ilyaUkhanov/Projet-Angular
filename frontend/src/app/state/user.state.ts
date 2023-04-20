@@ -20,7 +20,6 @@ export class UserState {
 
   @Action(LoginUserAction)
   loginUser(context: StateContext<IUserState>, action: ILoginUserAction) {
-    console.log("action.user", action.user)
     context.setState(action.user);
   }
 }

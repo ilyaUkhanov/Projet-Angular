@@ -12,7 +12,8 @@ export class ProductsRepositoryService {
   async getData(jwtHeader: string): Promise<Observable<IProductFromServer[]>> {
     try {
       // @ts-ignore
-      return this.http.get('https://tp05-ukhanov-ilya.onrender.com/products',
+      return this.http.get('https://tp06-ukhanov-ilya.onrender.com/products',
+      // return this.http.get('http://localhost:8080/products',
         { headers: new HttpHeaders().set("Authorization", jwtHeader)  }
       );
     } catch (error) {

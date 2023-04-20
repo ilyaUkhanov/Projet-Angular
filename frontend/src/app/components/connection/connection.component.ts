@@ -34,14 +34,11 @@ export class ConnectionComponent implements OnInit {
 
   async login(data: IUserLogin): Promise<Observable<HttpResponse<any>>> {
     try {
-      const observable = this.http.post<IUserState>('https://tp05-ukhanov-ilya.onrender.com', JSON.stringify(data), {observe: 'response'});
+      const observable = this.http.post<IUserState>('https://tp06-ukhanov-ilya.onrender.com', JSON.stringify(data), {observe: 'response'});
+      // const observable = this.http.post<IUserState>('http://localhost:8080/login', JSON.stringify(data), {observe: 'response'});
 
       observable.subscribe((response) => {
-        console.log("response.headers", response.headers)
-
           const authHeader = response.headers.get('Authorization');
-          console.log("authHeader", authHeader);
-
           const user: IUserState = {
             login: data.login,
             isConnected: true,
@@ -49,8 +46,6 @@ export class ConnectionComponent implements OnInit {
             lastname: response?.body?.lastname ?? "",
             firstname: response?.body?.firstname ?? ""
           }
-
-          console.log("user", user);
           this.store.dispatch(new LoginUserAction(user))
         });
 

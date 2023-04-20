@@ -20,7 +20,7 @@ import {UserState} from "./state/user.state";
 const appRoutes: Routes = [
   {path: '', component: FilterComponent},
   { path: 'product/details/:id', component: DetailComponent },
-  { path: 'product', component: ListProductComponent },
+  { path: 'product', component: FilterComponent },
   { path: 'panier', component: PanierComponent },
   { path: 'connection', component: ConnectionComponent },
 ]
