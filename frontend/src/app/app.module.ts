@@ -16,11 +16,12 @@ import {DetailComponent} from "./components/detail/detail.component";
 import {RouterModule, Routes} from "@angular/router";
 import {ConnectionComponent} from "./components/connection/connection.component";
 import {UserState} from "./state/user.state";
+import {WelcomeComponent} from "./components/welcome/welcome.component";
 
 const appRoutes: Routes = [
-  {path: '', component: FilterComponent},
+  { path: '', component: WelcomeComponent },
   { path: 'product/details/:id', component: DetailComponent },
-  { path: 'product', component: FilterComponent },
+  { path: 'product', component: ListProductComponent },
   { path: 'panier', component: PanierComponent },
   { path: 'connection', component: ConnectionComponent },
 ]
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
     FilterComponent,
     PanierComponent,
     DetailComponent,
-    ConnectionComponent
+    ConnectionComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+.main_component {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.main_section {
+  border: 1px solid #bebebe;
+  padding: 0 17%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-basis: 100%;
+  width: 100%;
+}

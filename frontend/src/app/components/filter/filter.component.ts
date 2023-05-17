@@ -1,15 +1,13 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ListProductComponent} from '../list-product/list-product.component'
 import {FilterService} from "../../services/filter.service";
-import {debounceTime, distinctUntilChanged, fromEvent, map, Observable, Subject, switchMap} from "rxjs";
+import {debounceTime, distinctUntilChanged, Observable, Subject} from "rxjs";
 import {Select, Store} from "@ngxs/store";
 import {IProductState, ProductState} from "../../state/product.state";
-import {IProduct} from "../../types/products";
-import {AddProductAction} from "../../actions/addProduct.actions";
 import {FilterProductsAction} from "../../actions/filterProducts.actions";
 
 @Component({
-  selector: 'filter',
+  selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })

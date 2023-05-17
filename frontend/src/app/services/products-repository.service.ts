@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {IProductFromServer} from "../types/products";
 import {Observable} from "rxjs";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +12,11 @@ export class ProductsRepositoryService {
 
   async getData(jwtHeader: string): Promise<Observable<IProductFromServer[]>> {
     try {
-      // @ts-ignore
-      return this.http.get('https://tp06-ukhanov-ilya.onrender.com/products',
-      // return this.http.get('http://localhost:8080/products',
+      return this.http.get<IProductFromServer[]>(environment.APIUrl + '/products',
         { headers: new HttpHeaders().set("Authorization", jwtHeader)  }
       );
     } catch (error) {
       return Promise.reject();
     }
   }
-
 }

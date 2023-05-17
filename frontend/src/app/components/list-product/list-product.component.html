@@ -1,4 +1,4 @@
-<div style="width: 100%; margin: 5%;margin-top: 0;">
+<div class="main_section">
   <h3>Ajouter un produit</h3>
   <form class="form_root" [formGroup]="ProductFormIdentification" (ngSubmit)="submitAddProduct()" >
     <div class="form_content" style="display: flex">
@@ -13,6 +13,9 @@
       <button type="submit" style="margin-left: 15px;" class="btn btn-success">+</button>
     </div>
   </form>
+
+  <h3>Filtrer des produits</h3>
+  <app-filter></app-filter>
 
   <ul class="listProduct_list listProduct_root">
     <article *ngFor="let product of filteredProducts"  class="p-3" style="border: 1px solid #bebebe; width: 100%">

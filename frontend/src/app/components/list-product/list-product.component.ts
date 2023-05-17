@@ -1,4 +1,4 @@
-import { Component, Input, OnInit  } from '@angular/core';
+import { Component  } from '@angular/core';
 import {ProductsRepositoryService} from '../../services/products-repository.service'
 import {FilterService} from "../../services/filter.service";
 import {IProduct, IProductFromServer} from "../../types/products";
@@ -6,7 +6,7 @@ import {Select, Store} from "@ngxs/store";
 import {CONVERTER_PRODUCTS} from "../../converters/products-converter";
 import {AddProductAction} from "../../actions/addProduct.actions";
 import {IProductState, ProductState} from "../../state/product.state";
-import {Observable, withLatestFrom} from "rxjs";
+import {Observable} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {RemoveProductAction} from "../../actions/removeProduct.actions";
 import {AddProductPanierAction} from "../../actions/addProductPanier.actions";

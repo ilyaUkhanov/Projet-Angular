@@ -5,6 +5,10 @@
         "nyholm/psr7": "^1.5",
         "nyholm/psr7-server": "^1.0",
         "guzzlehttp/psr7": "2",
-        "tuupola/slim-jwt-auth": "^3.7"
+        "tuupola/slim-jwt-auth": "^3.7",
+        "doctrine/orm": "^2.15",
+        "symfony/cache": "^6.2",
+        "doctrine/annotations": "^2.0",
+        "uma/dic": "3.0"
     }
 }

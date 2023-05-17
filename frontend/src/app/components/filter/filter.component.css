@@ -13,12 +13,3 @@
   align-items: center;
   width: 30%;
 }
-
-.filter_root {
-  display: flex;
-}
-
-.filter_products_wrapper {
-  margin: auto;
-  width: 50%;
-}

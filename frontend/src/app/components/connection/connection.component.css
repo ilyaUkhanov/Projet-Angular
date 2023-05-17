@@ -1,3 +1,12 @@
+:host {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .form_wrapper {
   margin: auto;
   width: 50%;
