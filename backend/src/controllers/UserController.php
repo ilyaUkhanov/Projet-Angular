@@ -20,6 +20,7 @@ class UserController
 
     /**
      * @param UserService $userService
+     * @param EntityManager $entityManager
      */
     public function __construct(UserService $userService, EntityManager $entityManager)
     {
@@ -117,7 +118,6 @@ class UserController
             ->find(intval($id));
 
         $response->getBody()->write(json_encode($product, true));
-//        $response->getBody()->write("TEST");
         return $response;
     }
 }

@@ -10,55 +10,7 @@ use src\controller\UserController;
 require __DIR__ . '/../vendor/autoload.php';
 $container = require __DIR__ . '/../bootstrap.php';
 
-const PRODUCTS = [
-    [
-        "id"=> 1,
-        "title"=> "The Last of Us",
-        "price"=> 10
-    ],
-    [
-        "id"=> 2,
-        "title"=> "Blood Origin",
-        "price"=> 120
-    ],
-    [
-        "id"=> 3,
-        "title"=> "Wednesday",
-        "price"=> 100
-    ],
-    [
-        "id"=> 4,
-        "title"=> "The rings of power",
-        "price"=> 110
-    ],
-    [
-        "id"=> 5,
-        "title"=> "The House of the Dragon",
-        "price"=> 20
-    ],
-    [
-        "id"=> 6,
-        "title"=> "Vikings Valhalla",
-        "price"=> 10
-    ]
-];
-
 const JWT_SECRET = "tempkey_test";
-
-const USERS = [
-    "ilyau" => [
-        "login" => "ilyau",
-        "firstname" => "Ilya",
-        "lastname" => "Ukhanov",
-        "password" => "1234",
-    ],
-    "thomasp" => [
-        "login" => "thomasp",
-        "firstname" => "Thomas",
-        "lastname" => "Personnenni",
-        "password" => "1234",
-    ]
-];
 
 $app = AppFactory::create(null, $container);
 $app->addBodyParsingMiddleware();

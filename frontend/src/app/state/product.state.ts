@@ -7,6 +7,7 @@ import {IRemoveProductAction, RemoveProductAction} from "../actions/removeProduc
 import {AddProductPanierAction, IAddProductPanierAction} from "../actions/addProductPanier.actions";
 import {IRemoveProductPanierAction, RemoveProductPanierAction} from "../actions/removeProductPanier.actions";
 import {FilterProductsAction, IFilterProductsAction} from "../actions/filterProducts.actions";
+import {ILoadProductsAction, LoadProductAction} from "../actions/loadProducts.actions";
 
 export type IProductState = {
   products: IProduct[];
@@ -48,6 +49,16 @@ export class ProductState {
     });
   }
 
+  @Action(LoadProductAction)
+  loadProducts(context: StateContext<IProductState>, action: ILoadProductsAction) {
+    const state = context.getState();
+    context.setState({
+      ...state,
+      products: action.products,
+      filteredProducts: this.filterProductsMapper(action.products, this.previousFilterName ?? "", this.previousFilterPrice ?? 0)
+    });
+  }
+
   @Action(RemoveProductAction)
   removeProduct(context: StateContext<IProductState>, action: IRemoveProductAction) {
     const state = context.getState();
@@ -64,6 +75,7 @@ export class ProductState {
   @Action(AddProductPanierAction)
   addProductPanierAction(context: StateContext<IProductState>, action: IAddProductPanierAction) {
     const state = context.getState();
+    
     context.setState({
       ...state,
       panierProducts: [

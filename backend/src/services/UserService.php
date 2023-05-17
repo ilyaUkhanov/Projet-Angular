@@ -3,6 +3,8 @@
 namespace src\services;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use src\entities\User;
 
 final class UserService
@@ -14,6 +16,10 @@ final class UserService
         $this->em = $em;
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
     public function register(string $login): User
     {
         $user = new User($login);

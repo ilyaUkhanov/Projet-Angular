@@ -11,6 +11,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {RemoveProductAction} from "../../actions/removeProduct.actions";
 import {AddProductPanierAction} from "../../actions/addProductPanier.actions";
 import {IUserState, UserState} from "../../state/user.state";
+import {LoadProductAction} from "../../actions/loadProducts.actions";
 
 @Component({
   selector: 'app-list-product',
@@ -40,15 +41,12 @@ export class ListProductComponent {
 
     this.userState.subscribe((user) => {
       if (user && user.isConnected) {
-
         this.httpService.getData(user.jwt).then((productsFromServer: Observable<IProductFromServer[]>) => {
           productsFromServer
             .pipe()
             .subscribe((products) => {
               const convertedProducts = products.map(prod => CONVERTER_PRODUCTS.serverToApp(prod));
-              convertedProducts.map((product) => {
-                this.store.dispatch(new AddProductAction(product));
-              })
+              this.store.dispatch(new LoadProductAction(convertedProducts));
               this.filteredProducts = convertedProducts;
             });
 
