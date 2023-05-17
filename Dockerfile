@@ -42,11 +42,11 @@ RUN composer dump-autoload --optimize
 
 RUN composer update
 
-# RUN php vendor/bin/doctrine orm:convert-mapping --namespace="" --force --from-database yml ./config/yaml
+RUN php vendor/bin/doctrine orm:convert-mapping --namespace="" --force --from-database yml ./config/yaml
 
-# RUN php vendor/bin/doctrine orm:generate-entities --generate-annotations=false --update-entities=true --generate-methods=false ./src
+RUN php vendor/bin/doctrine orm:generate-entities --generate-annotations=false --update-entities=true --generate-methods=false ./src
 
-# RUN composer update
+RUN composer update
 
 # Exposer le port 80 pour permettre les connexions entrantes
 EXPOSE 80
