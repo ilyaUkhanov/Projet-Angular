@@ -111,9 +111,10 @@ class UserController
         }
 
         $id = $args['id'];
+
         $product = $this->entityManager
             ->getRepository(Product::class)
-            ->find([$id]);
+            ->find(intval($id));
 
         $response->getBody()->write(json_encode($product, true));
 //        $response->getBody()->write("TEST");

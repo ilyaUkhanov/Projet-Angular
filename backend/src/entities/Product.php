@@ -13,7 +13,7 @@ final class Product
     #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
     public int $id;
 
-    #[Id, Column(type: 'integer', nullable: false)]
+    #[Column(type: 'integer', nullable: false)]
     public int $price;
 
     #[Column(type: 'string', nullable: false)]
