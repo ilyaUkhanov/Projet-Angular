@@ -1,16 +1,49 @@
 <?php
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\ORM\EntityManager;
-date_default_timezone_set('America/Lima');
-require_once "vendor/autoload.php";
-$isDevMode = true;
-$config = Setup::createYAMLMetadataConfiguration(array(__DIR__ . "/config/yaml"), $isDevMode);
-$conn = array(
-'host' => 'dpg-ccuhk2kgqg4a9295cagg-a',
-'driver' => 'pdo_pgsql',
-'user' => 'cnam_user',
-'password' => '0TJXmePJA9OkhPb6gllHoVZJIL6aOvDS',
-'dbname' => 'cnam',
-'port' => '5432'
-);
-$entityManager = EntityManager::create($conn, $config);
+use Doctrine\ORM\Tools\Setup;
+use src\controller\UserController;
+use src\services\UserService;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use UMA\DIC\Container;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+include __DIR__ . '/src/entities/User.php';
+include __DIR__ . '/src/entities/Product.php';
+include __DIR__ . '/src/controllers/UserController.php';
+include __DIR__ . '/src/services/UserService.php';
+
+$container = new Container(require __DIR__ . '/settings.php');
+
+$container->set(EntityManager::class, static function (Container $c): EntityManager {
+    /** @var array $settings */
+    $settings = $c->get('settings');
+
+    // Use the ArrayAdapter or the FilesystemAdapter depending on the value of the 'dev_mode' setting
+    // You can substitute the FilesystemAdapter for any other cache you prefer from the symfony/cache library
+    $cache = $settings['doctrine']['dev_mode'] ?
+        DoctrineProvider::wrap(new ArrayAdapter()) :
+        DoctrineProvider::wrap(new FilesystemAdapter(directory: $settings['doctrine']['cache_dir']));
+
+    $config = Setup::createAttributeMetadataConfiguration(
+        $settings['doctrine']['metadata_dirs'],
+        $settings['doctrine']['dev_mode'],
+        null,
+        $cache
+    );
+
+    return EntityManager::create($settings['doctrine']['connection'], $config);
+});
+
+$container->set(UserService::class, static function (Container $c) {
+    return new UserService($c->get(EntityManager::class));
+});
+
+$container->set(UserController::class, static function (Container $c) {
+    return new UserController($c->get(UserService::class), $c->get(EntityManager::class));
+});
+
+return $container;
+

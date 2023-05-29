@@ -1,21 +1,14 @@
 {
     "require": {
         "slim/slim": "4.*",
-        "slim/psr7": "^1.2",
-        "nyholm/psr7": "^1.3",
+        "slim/psr7": "^1.6",
+        "nyholm/psr7": "^1.5",
         "nyholm/psr7-server": "^1.0",
-        "guzzlehttp/psr7": "^1.7",
-        "http-interop/http-factory-guzzle": "^1.0",
-        "laminas/laminas-diactoros": "^2.4",
-        "firebase/php-jwt": "^5.2",
-        "tuupola/slim-jwt-auth": "^3.5",
-        "doctrine/orm": "^2.6.2",
-        "symfony/yaml": "2.*",
-	 "symfony/cache": "^5.3",
-      "ext-json": "*"
-    },
-    "autoload": {
-        "psr-0": {"": "src/"}
-
+        "guzzlehttp/psr7": "2",
+        "tuupola/slim-jwt-auth": "^3.7",
+        "doctrine/orm": "^2.15",
+        "symfony/cache": "^6.2",
+        "doctrine/annotations": "^2.0",
+        "uma/dic": "3.0"
     }
 }
