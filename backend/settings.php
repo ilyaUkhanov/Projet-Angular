@@ -1,6 +1,14 @@
 <?php
 define('APP_ROOT', __DIR__);
 
+use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Tools\DsnParser;
+
+$dsnParser = new DsnParser();
+$connectionParams = $dsnParser
+    ->parse('pdo-pgsql://root:FD69TAD1OrTY9ys7TePmQq6da38xk8gq@dpg-chq90iu7avjb90m6m960-a.frankfurt-postgres.render.com/nfe114_db');
+$conn = DriverManager::getConnection($connectionParams);
+
 return [
     'settings' => [
         'displayErrorDetails' => true,
@@ -25,15 +33,16 @@ return [
             // needs a 'path' parameter and doesn't use most of the ones shown in this example).
             // Refer to the Doctrine documentation to see the full list
             // of valid parameters: https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html
-            'connection' => [
-                'driver' => 'pdo_mysql',
-                'host' => 'dpg-chq90iu7avjb90m6m960-a',
-                'port' => 5432,
-                'dbname' => 'nfe114_db',
-                'user' => 'root',
-                'password' => 'FD69TAD1OrTY9ys7TePmQq6da38xk8gq',
-                'charset' => 'UTF8'
-            ]
+            // 'connection' => [
+            //     'driver' => 'pdo_pgsql',
+            //     'host' => 'dpg-chq90iu7avjb90m6m960-a.frankfurt-postgres.render.com',
+            //     'port' => 5432,
+            //     'dbname' => 'nfe114_db',
+            //     'user' => 'root',
+            //     'password' => 'FD69TAD1OrTY9ys7TePmQq6da38xk8gq',
+            //     'charset' => 'UTF8'
+            // ]
+            'connection' => $conn
         ]
     ]
 ];
