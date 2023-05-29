@@ -27,11 +27,11 @@ return [
             // of valid parameters: https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html
             'connection' => [
                 'driver' => 'pdo_mysql',
-                'host' => '127.0.0.1',
-                'port' => 3306,
+                'host' => 'dpg-chq90iu7avjb90m6m960-a',
+                'port' => 5432,
                 'dbname' => 'nfe114_db',
                 'user' => 'root',
-                'password' => 'root',
+                'password' => 'FD69TAD1OrTY9ys7TePmQq6da38xk8gq',
                 'charset' => 'UTF8'
             ]
         ]
