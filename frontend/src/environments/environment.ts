@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // APIUrl: 'http://localhost:8080',
-  APIUrl: 'https://projet-ukhanov-ilya.onrender.com/',
+  APIUrl: 'https://projet-ukhanov-ilya.onrender.com',
 };
 
 /*
